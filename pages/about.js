@@ -1,7 +1,8 @@
 import Hero from 'components/hero'
 
 const About = () => {
-  return <Hero />
+  const props2 = { title: 'About', subtitle: 'About development activities' }
+  return <Hero {...props2} />
 }
 
 export default About
