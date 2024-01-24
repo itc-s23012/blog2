@@ -6,7 +6,7 @@
  }
 
  /* 横並び（基本形）*/
- .sideByside {
+ .sideBySide {
    display: flex;
    flex-direction: column;
  }
