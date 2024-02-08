@@ -76,7 +76,7 @@ const Post = ({
 const getStaticPaths = async () => {
   const allSlugs = await getAllSlugs()
   return {
-    paths: allSlugs.map(({ slug }) => ({ params: { slug } })),
+    paths: allSlugs.map(({ slug }) => `/blog/${slug}`),
     fallback: false
   }
 }

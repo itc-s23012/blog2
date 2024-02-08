@@ -20,7 +20,7 @@ const Home = ({ posts }) => {
         <Hero {...props1} imageOn />
 
         <Posts posts={posts} />
-        <Pagination nextUrl='/blog2' nextText='More Posts' />
+        <Pagination nextUrl='/blog' nextText='More Posts' />
       </Container>
     </>
   )

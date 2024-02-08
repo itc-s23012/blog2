@@ -6,12 +6,12 @@ import Posts from 'components/posts'
 import { getPlaiceholder } from 'plaiceholder'
 import { eyecatchLocal } from 'lib/constants'
 
-const props3 = { title: 'Blog', subtitle: 'Recent Posts' }
-const Blog = ({ posts }) => {
+const props = { title: 'Blog', subtitle: 'Recent Posts' }
+const Home = ({ posts }) => {
   return (
     <Container>
       <Meta pageTitle='ブログ' />
-      <Hero {...props3} />
+      <Hero {...props} />
 
       <Posts posts={posts} />
     </Container>
@@ -36,5 +36,5 @@ const getStaticProps = async () => {
   }
 }
 
-export default Blog
+export default Home
 export { getStaticProps }
