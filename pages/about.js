@@ -9,7 +9,7 @@ import {
 } from 'components/two-column'
 import Contact from 'components/contact'
 import Image from 'next/legacy/image'
-import eyecatch from 'images-local/about.jpg'
+import eyecatch from 'images/about.jpg'
 
 const About = () => {
   const props2 = { title: 'About', subtitle: 'About development activities' }
