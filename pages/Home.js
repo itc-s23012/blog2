@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { typeEffectiveness } from './typeEffectiveness'
-import { selectPokemonByType } from './selectPokemon'
+import { typeEffectiveness } from 'components/typeEffectiveness'
+import { selectPokemonByType } from 'components/selectPokemon'
 
 const Home = () => {
   const [opponentPokemonList, setOpponentPokemonList] = useState([])
