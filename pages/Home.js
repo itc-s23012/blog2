@@ -89,18 +89,22 @@ const Home = () => {
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
                 alt={pokemon.name}
               />
-              {`- Opponent Pokemon: ${opponentPokemonList[index]?.name ||
-                'Unknown'} - Party Pokemon: ${pokemon.name} - Type: ${
-                pokemon.type
-              }`}
-              <a
-                href={pokemon.url}
-                target='_blank'
-                rel='noopener noreferrer'
-                style={{ color: 'blue' }}
-              >
-                Learn More
-              </a>
+              <div>
+                <p>
+                  {`Opponent Pokemon: ${opponentPokemonList[index]?.name ||
+                    'Unknown'}`}
+                </p>
+                <p>{`Party Pokemon: ${pokemon.name}`}</p>
+                <p>{`Type: ${pokemon.type}`}</p>
+                <a
+                  href={pokemon.url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  style={{ color: 'blue', textAlign: 'center' }}
+                >
+                  Learn More
+                </a>
+              </div>
             </div>
           </li>
         ))}

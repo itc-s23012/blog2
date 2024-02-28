@@ -905,6 +905,96 @@ const selectPokemonByType = types => {
       name: 'Mew',
       type: 'psychic',
       url: 'https://pokeapi.co/api/v2/pokemon/151'
+    },
+    {
+      id: 152,
+      name: 'chikorita',
+      type: 'grass',
+      url: 'https://pokeapi.co/api/v2/pokemon/152'
+    },
+    {
+      id: 153,
+      name: 'bayleef',
+      type: 'grass',
+      url: 'https://pokeapi.co/api/v2/pokemon/153'
+    },
+    {
+      id: 154,
+      name: 'meganium',
+      type: 'grass',
+      url: 'https://pokeapi.co/api/v2/pokemon/154'
+    },
+    {
+      id: 155,
+      name: 'cyndaquil',
+      type: 'fire',
+      url: 'https://pokeapi.co/api/v2/pokemon/155'
+    },
+    {
+      id: 156,
+      name: 'quilava',
+      type: 'fire',
+      url: 'https://pokeapi.co/api/v2/pokemon/156'
+    },
+    {
+      id: 157,
+      name: 'typhlosion',
+      type: 'fire',
+      url: 'https://pokeapi.co/api/v2/pokemon/157'
+    },
+    {
+      id: 158,
+      name: 'totodile',
+      type: 'water',
+      url: 'https://pokeapi.co/api/v2/pokemon/158'
+    },
+    {
+      id: 159,
+      name: 'croconaw',
+      type: 'water',
+      url: 'https://pokeapi.co/api/v2/pokemon/159'
+    },
+    {
+      id: 160,
+      name: 'feraligatr',
+      type: 'water',
+      url: 'https://pokeapi.co/api/v2/pokemon/160'
+    },
+    {
+      id: 243,
+      name: 'raikou',
+      type: 'electric',
+      url: 'https://pokeapi.co/api/v2/pokemon/243'
+    },
+    {
+      id: 244,
+      name: 'entei',
+      type: 'fire',
+      url: 'https://pokeapi.co/api/v2/pokemon/244'
+    },
+    {
+      id: 245,
+      name: 'suicune',
+      type: 'water',
+      url: 'https://pokeapi.co/api/v2/pokemon/245'
+    },
+    {
+      id: 249,
+      name: 'lugia',
+      type: 'flyingpsychic',
+      url: 'https://pokeapi.co/api/v2/pokemon/249'
+    },
+    {
+      id: 250,
+      name: 'ho-oh',
+      type: 'fireflying',
+      url: 'https://pokeapi.co/api/v2/pokemon/250'
+    },
+    {
+      id: 251,
+      name: 'celebi',
+      type: 'grasspsychic',
+      url: 'https://pokeapi.co/api/v2/pokemon/251'
     }
   ]
   const effectivePokemons = availablePokemons.filter(pokemon => {

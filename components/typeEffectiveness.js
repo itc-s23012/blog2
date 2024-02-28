@@ -42,7 +42,8 @@ const typeEffectiveness = {
     flyingrock: 0.5,
     iceflying: 1,
     electricflying: 1,
-    flyingdragon: 1
+    flyingdragon: 1,
+    flyingpsychic: 1
   },
   fire: {
     normal: 1,
@@ -87,7 +88,8 @@ const typeEffectiveness = {
     flyingrock: 0.5,
     iceflying: 2.0,
     electricflying: 1,
-    flyingdragon: 0.5
+    flyingdragon: 0.5,
+    flyingpsychic: 1
   },
   water: {
     normal: 1,
@@ -132,7 +134,8 @@ const typeEffectiveness = {
     flyingrock: 2.0,
     iceflying: 1,
     electricflying: 1,
-    flyingdragon: 0.5
+    flyingdragon: 0.5,
+    flyingpsychic: 1
   },
   electric: {
     normal: 1,
@@ -177,7 +180,8 @@ const typeEffectiveness = {
     flyingrock: 2.0,
     iceflying: 2.0,
     electricflying: 1,
-    flyingdragon: 1
+    flyingdragon: 1,
+    flyingpsychic: 2.0
   },
   grass: {
     normal: 1,
@@ -222,7 +226,8 @@ const typeEffectiveness = {
     flyingrock: 1,
     iceflying: 0.5,
     electricflying: 0.5,
-    flyingdragon: 0.5
+    flyingdragon: 0.5,
+    flyingpsychic: 0.5
   },
   ice: {
     normal: 1,
@@ -267,7 +272,8 @@ const typeEffectiveness = {
     flyingrock: 2.0,
     iceflying: 1,
     electricflying: 2.0,
-    flyingdragon: 2.0
+    flyingdragon: 2.0,
+    flyingpsychic: 2.0
   },
   fighting: {
     normal: 2,
@@ -312,7 +318,8 @@ const typeEffectiveness = {
     flyingrock: 1,
     iceflying: 1,
     electricflying: 0.5,
-    flyingdragon: 0.5
+    flyingdragon: 0.5,
+    flyingpsychic: 0.5
   },
   poison: {
     normal: 1,
@@ -357,7 +364,8 @@ const typeEffectiveness = {
     flyingrock: 0.5,
     iceflying: 1,
     electricflying: 1,
-    flyingdragon: 1
+    flyingdragon: 1,
+    flyingpsychic: 1
   },
   ground: {
     normal: 1,
@@ -402,7 +410,8 @@ const typeEffectiveness = {
     flyingrock: 0,
     iceflying: 0,
     electricflying: 0,
-    flyingdragon: 0
+    flyingdragon: 0,
+    flyingpsychic: 0
   },
   flying: {
     normal: 1,
@@ -447,7 +456,8 @@ const typeEffectiveness = {
     flyingrock: 0.5,
     iceflying: 1,
     electricflying: 0.5,
-    flyingdragon: 1
+    flyingdragon: 1,
+    flyingpsychic: 1
   },
   psychic: {
     normal: 1,
@@ -492,7 +502,8 @@ const typeEffectiveness = {
     flyingrock: 1,
     iceflying: 1,
     electricflying: 1,
-    flyingdragon: 1
+    flyingdragon: 1,
+    flyingpsychic: 0.5
   },
   bug: {
     normal: 1,
@@ -537,7 +548,8 @@ const typeEffectiveness = {
     flyingrock: 0.5,
     iceflying: 0.5,
     electricflying: 0.5,
-    flyingdragon: 0.5
+    flyingdragon: 0.5,
+    flyingpsychic: 1
   },
   rock: {
     normal: 1,
@@ -582,7 +594,8 @@ const typeEffectiveness = {
     flyingrock: 2.0,
     iceflying: 2.0,
     electricflying: 2.0,
-    flyingdragon: 2.0
+    flyingdragon: 2.0,
+    flyingpsychic: 2.0
   },
   ghost: {
     normal: 0,
@@ -627,7 +640,8 @@ const typeEffectiveness = {
     flyingrock: 1,
     iceflying: 1,
     electricflying: 1,
-    flyingdragon: 1
+    flyingdragon: 1,
+    flyingpsychic: 2.0
   },
   dragon: {
     normal: 1,
@@ -672,7 +686,8 @@ const typeEffectiveness = {
     flyingrock: 1,
     iceflying: 1,
     electricflying: 1,
-    flyingdragon: 2.0
+    flyingdragon: 2.0,
+    flyingpsychic: 1
   },
   dark: {
     normal: 1,
@@ -717,7 +732,8 @@ const typeEffectiveness = {
     flyingrock: 1,
     iceflying: 1,
     electricflying: 1,
-    flyingdragon: 1
+    flyingdragon: 1,
+    flyingpsychic: 2.0
   },
   steel: {
     normal: 1,
@@ -762,7 +778,8 @@ const typeEffectiveness = {
     flyingrock: 2.0,
     iceflying: 2.0,
     electricflying: 0.5,
-    flyingdragon: 1
+    flyingdragon: 1,
+    flyingpsychic: 1
   },
   fairy: {
     normal: 1,
@@ -807,7 +824,8 @@ const typeEffectiveness = {
     flyingrock: 1,
     iceflying: 1,
     electricflying: 1,
-    flyingdragon: 2.0
+    flyingdragon: 2.0,
+    flyingpsychic: 1
   }
 }
 
