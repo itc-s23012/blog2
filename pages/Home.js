@@ -5,13 +5,14 @@ import { selectPokemonByType } from 'components/selectPokemon'
 const Home = () => {
   const [opponentPokemonList, setOpponentPokemonList] = useState([])
   const [party, setParty] = useState([])
+  const [partyCandidates, setPartyCandidates] = useState([])
   const [errorMessage, setErrorMessage] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleOpponentPokemonChange = async (event, index) => {
     const pokemonId = event.target.value
     if (pokemonId < 1 || pokemonId > 1000) {
-      setErrorMessage('ポケモンIDは1から100の範囲で入力してください')
+      setErrorMessage('ポケモンIDは1から1000の範囲で入力してください')
       return
     }
 
@@ -68,94 +69,148 @@ const Home = () => {
     }
   }
 
+  const fetchPokemonStats = async (id) => {
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+      if (!response.ok) {
+        throw new Error('ステータス情報を取得できませんでした')
+      }
+      const data = await response.json()
+      return {
+        id: data.id,
+        stats: data.stats,
+        types: data.types.map(typeInfo => typeInfo.type.name),
+        japaneseName: await fetchPokemonJapaneseName(data.id),
+      }
+    } catch (error) {
+      console.error('エラー:', error.message)
+      return null
+    }
+  }
+
   useEffect(() => {
-    formParty()
+    if (opponentPokemonList.length > 0) {
+      formPartyCandidates()
+    }
   }, [opponentPokemonList])
 
   const calculateTypeEffectiveness = (attackerType, defenderType) => {
     return typeEffectiveness[attackerType][defenderType]
   }
 
-  const formParty = async () => {
-    let selectedParty = []
-    const seenPokemon = new Set() // 重複を防ぐためのセット
+  const formPartyCandidates = async () => {
+    let candidates = []
+    const seenPokemon = new Set()
+
     for (const opponentPokemon of opponentPokemonList) {
       if (!opponentPokemon || !opponentPokemon.types) continue
-      let bestPokemon = null
-      let highestEffectiveness = 0
-      Object.keys(typeEffectiveness).forEach(type => {
-        const effectiveness = calculateTypeEffectiveness(
-          type,
-          opponentPokemon.types[0].type.name.toLowerCase()
-        )
-        if (effectiveness > highestEffectiveness) {
-          highestEffectiveness = effectiveness
-          bestPokemon = selectPokemonByType(type)
-        }
-      })
-      if (bestPokemon && !seenPokemon.has(bestPokemon.id)) {
-        const japaneseName = await fetchPokemonJapaneseName(bestPokemon.id)
-        const japaneseTypeName = await fetchTypeJapaneseName(bestPokemon.type)
+      let possiblePokemons = []
 
-        selectedParty.push({ ...bestPokemon, japaneseName, japaneseTypeName })
-        seenPokemon.add(bestPokemon.id) // IDを追加
+      // 相手ポケモンの攻撃と特攻ステータスを取得
+      const attackStat = opponentPokemon.stats.find(stat => stat.stat.name === 'attack').base_stat
+      const specialAttackStat = opponentPokemon.stats.find(stat => stat.stat.name === 'special-attack').base_stat
+
+      const opponentFocus = attackStat > specialAttackStat ? 'attack' : 'special-attack'
+
+      for (const type of Object.keys(typeEffectiveness)) {
+        const effectiveness = calculateTypeEffectiveness(
+            type,
+            opponentPokemon.types[0].type.name.toLowerCase()
+        )
+        if (effectiveness > 1) {
+          const bestPokemon = selectPokemonByType(type)
+          const statsData = await fetchPokemonStats(bestPokemon.id)
+
+          if (statsData && !seenPokemon.has(statsData.id)) {
+            // 相手が物理攻撃が強いなら防御が高いポケモンを優先
+            if (opponentFocus === 'attack') {
+              const defenseStat = statsData.stats.find(stat => stat.stat.name === 'defense').base_stat
+              possiblePokemons.push({ ...statsData, effectiveness, defense: defenseStat })
+            }
+            // 相手が特殊攻撃が強いなら特防が高いポケモンを優先
+            else {
+              const specialDefenseStat = statsData.stats.find(stat => stat.stat.name === 'special-defense').base_stat
+              possiblePokemons.push({ ...statsData, effectiveness, specialDefense: specialDefenseStat })
+            }
+            seenPokemon.add(statsData.id)
+          }
+        }
       }
+
+      // 優先度: 相手の攻撃方法（物理か特殊）に応じて、防御か特防の高い順に並べ替え
+      if (opponentFocus === 'attack') {
+        possiblePokemons.sort((a, b) => b.defense - a.defense)
+      } else {
+        possiblePokemons.sort((a, b) => b.specialDefense - a.specialDefense)
+      }
+
+      candidates.push(possiblePokemons)
     }
-    selectedParty = selectedParty.slice(0, 5)
-    setParty(selectedParty)
+    setPartyCandidates(candidates)
+  }
+
+  const handleSelectPokemon = (index, selectedPokemon) => {
+    setParty(prevParty => {
+      const updatedParty = [...prevParty]
+      updatedParty[index] = selectedPokemon
+      return updatedParty
+    })
   }
 
   return (
-    <div>
-      <h1>ポケモンパーティー形成</h1>
-      <p>5匹の対戦相手のポケモンを選択してください。</p>
       <div>
-        {[1, 2, 3, 4, 5].map(index => (
-          <div key={index}>
-            <label htmlFor={`opponentPokemon${index}`}>
-              {`対戦相手ポケモン ${index} のIDを入力:`}
-            </label>
-            <input
-              type='number'
-              id={`opponentPokemon${index}`}
-              onChange={event => handleOpponentPokemonChange(event, index - 1)}
-            />
-          </div>
-        ))}
-      </div>
-      {loading && <p>ロード中...</p>}
-      <h2>エラーメッセージ: {errorMessage}</h2>
-      <h2>パーティー</h2>
-      <ul>
-        {party.map((pokemon, index) => (
-          <li key={index} className="pokemon-info">
-            <div>
-              <img
-                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-                alt={pokemon.japaneseName}
-              />
-              <div>
-                <p>
-                  {`対戦相手ポケモン: ${opponentPokemonList[index]?.japaneseName || '不明'}`}
-                </p>
-                <p>{`パーティーポケモン: ${pokemon.japaneseName}`}</p>
-                <p>{`タイプ: ${pokemon.japaneseTypeName}`}</p>
-                <a
-                  href={pokemon.url}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  style={{ color: 'blue', textAlign: 'center' }}
-                >
-                  詳細を見る
-                </a>
+        <h1>ポケモンパーティー形成</h1>
+        <p>5匹の対戦相手のポケモンを選択してください。</p>
+        <div>
+          {[1, 2, 3, 4, 5].map(index => (
+              <div key={index}>
+                <label htmlFor={`opponentPokemon${index}`}>
+                  {`対戦相手ポケモン ${index} のIDを入力:`}
+                </label>
+                <input
+                    type='number'
+                    id={`opponentPokemon${index}`}
+                    onChange={event => handleOpponentPokemonChange(event, index - 1)}
+                />
               </div>
+          ))}
+        </div>
+        {loading && <p>ロード中...</p>}
+        <h2>エラーメッセージ: {errorMessage}</h2>
+        <h2>パーティー候補</h2>
+        {partyCandidates.map((candidates, index) => (
+            <div key={index}>
+              <h3>{`対戦相手 ${index + 1} に対する候補`}</h3>
+              <ul>
+                {candidates.map(candidate => (
+                    <li key={candidate.id}>
+                      <img
+                          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${candidate.id}.png`}
+                          alt={candidate.japaneseName}
+                      />
+                      <p>{`ポケモン: ${candidate.japaneseName}`}</p>
+                      <p>{`ステータス: ${candidate.stats.map(stat => stat.base_stat).join(', ')}`}</p>
+                      <p>{`効果: ${candidate.effectiveness}`}</p>
+                      <button onClick={() => handleSelectPokemon(index, candidate)}>選択</button>
+                    </li>
+                ))}
+              </ul>
             </div>
-          </li>
         ))}
-      </ul>
-    </div>
+        <h2>選択されたパーティー</h2>
+        <ul>
+          {party.map((pokemon, index) => (
+              <li key={index}>
+                <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+                    alt={pokemon.japaneseName}
+                />
+                <p>{`ポケモン: ${pokemon.japaneseName}`}</p>
+              </li>
+          ))}
+        </ul>
+      </div>
   )
 }
 
 export default Home
-
