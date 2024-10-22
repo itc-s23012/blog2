@@ -124,7 +124,7 @@ const typeEffectiveness = {
     bugfairy: 1,
     rockdragon: 0.5,
     rockdark: 0.5,
-    rocksteel: 0.5,
+    rocksteel: 0.25,
     rockfairy: 0.5,
     ghostdragon: 0,
     ghostdark: 0,
